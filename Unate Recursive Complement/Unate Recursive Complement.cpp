@@ -3,10 +3,13 @@
 
 #include <iostream>
 #include "CubeList.h"
+#include "Cube.h"
+
 
 int main()
 {
-    CubeList::Cube c(3);
+
+    Cube c(3);
     for (int i = 0; i < 3; i++) {
         cout << c.getValue(i + 1) << ' ';
     }
