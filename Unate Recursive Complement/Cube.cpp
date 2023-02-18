@@ -11,6 +11,17 @@ Cube::Cube(int number_of_variables) {
 	}
 }
 
+Cube::Cube(const Cube & origin) {
+	this->number_of_variables = origin.number_of_variables;
+	terms.resize(origin.number_of_variables);
+
+	//initialize all variables with zeros
+	for (int i = 0; i < number_of_variables; i++) {
+		terms[i].first = origin.terms[i].first;
+		terms[i].second = origin.terms[i].second;
+	}
+}
+
 short Cube::getValue(int variable){
 	variable--;
 	return (terms[variable].first << 1) + terms[variable].second;
@@ -38,5 +49,5 @@ bool Cube::isDontCare() const {
 		if (cube.first == 0 || cube.second == 0)
 			return 0;
 	}
-	return 1
+	return 1;
 }

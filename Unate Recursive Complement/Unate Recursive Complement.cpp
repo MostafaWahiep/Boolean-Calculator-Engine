@@ -9,6 +9,46 @@
 
 using namespace std;
 
+bool isAllDontCaresCube(deque<Cube>& F) {
+	for (Cube c : F) {
+		if (!c.isDontCare())
+			return false;
+	}
+	return true;
+}
+
+void complementOneCubed(deque<Cube>& F, int& number_of_variables) {
+	for (int i = 0; i < number_of_variables; i++) {
+		Cube c(number_of_variables);
+
+		switch (F.front().getValue(i + 1)) {
+		case 1:
+			c.setValue_at(i + 1);
+			break;
+		case 2:
+			c.setValue_at(-1 * i - 1);
+			break;
+		}
+		F.push_back(c);
+	}
+	F.pop_front();
+}
+
+void Complement(deque<Cube>& F, int& number_of_variables) {
+	// Empty cube list
+	if (F.size() == 0) {
+		Cube c(number_of_variables);
+		F.push_back(c);
+	}
+	// Cube list contains All Don’t Cares Cube
+	else if (isAllDontCaresCube(F)) {
+		F.clear();
+	}
+	// Cube list contains just one cube
+	else if(F.size() == 1){
+		complementOneCubed(F, number_of_variables);
+	}
+}
 
 int main()
 {

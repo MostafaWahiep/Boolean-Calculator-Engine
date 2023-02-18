@@ -11,6 +11,8 @@ public:
 	vector<pair<bool, bool>> terms;
 
 	Cube(int number_of_variables);
+	
+	Cube(const Cube &origin);
 
 		/*
 		* 1-> true
