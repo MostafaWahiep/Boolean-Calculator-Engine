@@ -25,6 +25,23 @@ public:
 				}
 			}
 
+			short getValue(int variable) {
+				variable--;
+				return terms[variable].first + terms[variable].second;
+			}
+
+			void setValue_at(int value) {
+				if (value > 0) {
+					terms[value - 1].first = 0;
+					terms[value - 1].second = 1;
+				}
+				else {
+					value *= -1;
+					terms[value - 1].first = 1;
+					terms[value - 1].second = 0;
+				}
+			}
+
 
 	};
 };

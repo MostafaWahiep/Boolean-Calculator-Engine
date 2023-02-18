@@ -6,7 +6,7 @@
 
 int main()
 {
-    
+    CubeList::Cube c(3);
 
 
 }
