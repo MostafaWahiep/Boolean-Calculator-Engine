@@ -2,9 +2,6 @@
 
 #include <vector>
 
-#define F first
-#define S second
-
 using namespace std;
 
 class CubeList {
@@ -25,11 +22,20 @@ public:
 				}
 			}
 
+			/*
+			* 1-> true
+			* 2-> complement
+			* 3-> don't care
+			*/
 			short getValue(int variable) {
 				variable--;
-				return terms[variable].first + terms[variable].second;
+				return terms[variable].first*2 + terms[variable].second;
 			}
 
+			/*
+			* +ve-> true
+			* -ve-> complement
+			*/
 			void setValue_at(int value) {
 				if (value > 0) {
 					terms[value - 1].first = 0;
@@ -40,6 +46,11 @@ public:
 					terms[value - 1].first = 1;
 					terms[value - 1].second = 0;
 				}
+			}
+
+			void setDontCare(int variable) {
+				terms[variable - 1].first = 1;
+				terms[variable - 1].second = 1;
 			}
 
 
