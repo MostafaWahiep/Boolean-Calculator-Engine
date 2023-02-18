@@ -29,7 +29,7 @@ public:
 			*/
 			short getValue(int variable) {
 				variable--;
-				return terms[variable].first*2 + terms[variable].second;
+				return (terms[variable].first<<1) + terms[variable].second;
 			}
 
 			/*

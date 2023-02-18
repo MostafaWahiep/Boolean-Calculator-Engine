@@ -17,7 +17,12 @@ int main()
         cout << c.getValue(i + 1) << ' ';
     }
     cout << endl;
-
+    c.setDontCare(2);
+    c.setValue_at(-3);
+    for (int i = 0; i < 3; i++) {
+        cout << c.getValue(i + 1) << ' ';
+    }
+    cout << endl;
 
 }
 
