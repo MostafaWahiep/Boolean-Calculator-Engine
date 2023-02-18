@@ -27,6 +27,7 @@ public:
 
 		void setDontCare(int variable);
 
+		bool isDontCare() const;
 
 };
 

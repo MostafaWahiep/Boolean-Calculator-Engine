@@ -2,30 +2,39 @@
 //
 
 #include <iostream>
+#include <fstream>
+#include <deque>
 #include "CubeList.h"
 #include "Cube.h"
+
+using namespace std;
 
 
 int main()
 {
+	freopen("input.txt", "r", stdin);
 
-    Cube c(3);
-    for (int i = 0; i < 3; i++) {
-        cout << c.getValue(i + 1) << ' ';
-    }
-    cout << endl;
-    c.setValue_at(-2);
-    c.setValue_at(1);
-    for (int i = 0; i < 3; i++) {
-        cout << c.getValue(i + 1) << ' ';
-    }
-    cout << endl;
-    c.setDontCare(2);
-    c.setValue_at(-3);
-    for (int i = 0; i < 3; i++) {
-        cout << c.getValue(i + 1) << ' ';
-    }
-    cout << endl;
+	int number_of_variables;
+	int number_of_cubes;
+	int vars, val, i , j;
+
+	deque<Cube> terms;
+
+	cin >> number_of_variables >> number_of_cubes;
+	
+	for (i = 0; i < number_of_cubes; i++) {
+		cin >> vars;
+		Cube c(number_of_variables);
+		for (j = 0; j < vars; j++) {
+			cin >> val;
+			c.setValue_at(val);
+		}
+		terms.push_back(c);
+	}
+
+
+
+
 
 }
 

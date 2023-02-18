@@ -11,7 +11,7 @@ Cube::Cube(int number_of_variables) {
 	}
 }
 
-short Cube::getValue(int variable) {
+short Cube::getValue(int variable){
 	variable--;
 	return (terms[variable].first << 1) + terms[variable].second;
 }
@@ -31,4 +31,12 @@ void Cube::setValue_at(int value) {
 void Cube::setDontCare(int variable) {
 	terms[variable - 1].first = 1;
 	terms[variable - 1].second = 1;
+}
+
+bool Cube::isDontCare() const {
+	for (pair<bool, bool> cube : terms) {
+		if (cube.first == 0 || cube.second == 0)
+			return 0;
+	}
+	return 1
 }
