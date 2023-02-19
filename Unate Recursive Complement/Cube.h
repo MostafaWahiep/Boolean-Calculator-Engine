@@ -27,6 +27,8 @@ public:
 		*/
 		void setValue_at(int value);
 
+		void setValue(int variable, int value);
+
 		void setDontCare(int variable);
 
 		bool isDontCare() const;
