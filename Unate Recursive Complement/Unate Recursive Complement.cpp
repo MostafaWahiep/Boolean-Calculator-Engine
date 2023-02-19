@@ -34,6 +34,22 @@ void complementOneCubed(deque<Cube>& F, int& number_of_variables) {
 	F.pop_front();
 }
 
+bool isBinate(deque<Cube>& F, int& number_of_variables) {
+	int num = 0;
+	for (int i = 0; i < number_of_variables; i++) {
+		int x = 0, y = 0;
+		for (int j = 0; j < F.size(); j++) {
+			if (F[j].getValue(i + 1) == 1)
+				x++;
+			else if (F[j].getValue(i + 1) == 2)
+				y++;
+		}
+		if (x > 0 && y > 0)
+			num++;
+	}
+	return num > 0;
+}
+
 void Complement(deque<Cube>& F, int& number_of_variables) {
 	// Empty cube list
 	if (F.size() == 0) {
@@ -47,6 +63,13 @@ void Complement(deque<Cube>& F, int& number_of_variables) {
 	// Cube list contains just one cube
 	else if(F.size() == 1){
 		complementOneCubed(F, number_of_variables);
+	}
+	else {
+
+		if (is_binate(F)) {
+
+		}
+
 	}
 }
 
@@ -71,9 +94,6 @@ int main()
 		}
 		terms.push_back(c);
 	}
-
-
-
 
 
 }
