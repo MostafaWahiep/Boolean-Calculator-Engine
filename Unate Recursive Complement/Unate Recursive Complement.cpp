@@ -35,6 +35,21 @@ deque<Cube> complementOneCubed(deque<Cube> F, int number_of_variables) {
 	return nF;
 }
 
+bool isBinate(deque<Cube>& F, int& number_of_variables) {
+	for (int i = 0; i < number_of_variables; i++) {
+		int T = 0, C = 0;
+		for (int j = 0; j < F.size(); j++) {
+			if (F[j].getValue(i + 1) == 1)
+				T++;
+			else if (F[j].getValue(i + 1) == 2)
+				C++;
+		}
+		if (T > 0 && C > 0)
+			return true;
+	}
+	return false;
+}
+
 int MostBinate(deque<Cube>& F, int& number_of_variables) {
 
 	vector < pair<pair<int, int>, int>> ties;
@@ -46,7 +61,10 @@ int MostBinate(deque<Cube>& F, int& number_of_variables) {
 				T++, O++;
 			else if (F[j].getValue(i + 1) == 2)
 				C++, O++;
-		}		
+		}
+
+		// if binate
+		if (T > 0 && C > 0)
 			ties.push_back(make_pair(make_pair(O, abs(T - C)), i));
 	}
 
@@ -60,6 +78,26 @@ int MostBinate(deque<Cube>& F, int& number_of_variables) {
 
 	return ties.front().second + 1;
 }
+
+int MostUnate(deque<Cube>& F, int number_of_variables) {
+	vector<pair<int, int>> ties;
+	for (int i = 0; i < number_of_variables; i++) {
+		int O = 0;
+		for (int j = 0; j < F.size(); j++) {
+			if (F[j].getValue(i + 1) < 3)
+				O++;
+		}
+
+		ties.push_back(make_pair(O, i));
+	}
+	sort(ties.begin(), ties.end(), [](pair<int, int>& a, pair<int, int>& b) {
+		if (a.first != b.first)
+			return a.first > b.first;
+		return a.second < b.second;
+		});
+	return ties.front().second + 1;
+}
+
 
 deque<Cube> positiveCofactor(deque<Cube> F, int x) {
 	deque<Cube> P;
@@ -76,17 +114,17 @@ deque<Cube> positiveCofactor(deque<Cube> F, int x) {
 }
 
 deque<Cube> negativeCofactor(deque<Cube> F, int x) {
-	deque<Cube> N;
+	deque<Cube> nF;
 	for (int i = 0; i < F.size(); i++) {
 		if (F[i].getValue(x) == 3) {
-			N.push_back(F[i]);
+			nF.push_back(F[i]);
 		}
 		else if (F[i].getValue(x) == 2) {
 			F[i].setDontCare(x);
-			N.push_back(F[i]);
+			nF.push_back(F[i]);
 		}
 	}
-	return N;
+	return nF;
 }
 
 void AND(deque<Cube>& F, int x, int T) {
@@ -116,7 +154,13 @@ deque<Cube> Complement(deque<Cube> F, int number_of_variables) {
 
 		int x;
 	
-		x = MostBinate(F, number_of_variables);
+		if (isBinate(F, number_of_variables)) {
+			x = MostBinate(F, number_of_variables);
+		}
+		else {
+			x = MostUnate(F, number_of_variables);
+		}
+
 
 		deque<Cube> P = Complement(positiveCofactor(F, x), number_of_variables);
 		deque<Cube> N = Complement(negativeCofactor(F, x), number_of_variables);
