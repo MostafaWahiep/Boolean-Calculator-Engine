@@ -62,31 +62,31 @@ int MostBinate(deque<Cube>& F, int& number_of_variables) {
 }
 
 deque<Cube> positiveCofactor(deque<Cube> F, int x) {
-	deque<Cube> nF;
+	deque<Cube> P;
 	for (int i = 0; i < F.size(); i++) {
 		if (F[i].getValue(x) == 3) {
-			nF.push_back(F[i]);
+			P.push_back(F[i]);
 		}
 		else if (F[i].getValue(x) == 1) {
 			F[i].setDontCare(x);
-			nF.push_back(F[i]);
+			P.push_back(F[i]);
 		}
 	}
-	return nF;
+	return P;
 }
 
 deque<Cube> negativeCofactor(deque<Cube> F, int x) {
-	deque<Cube> nF;
+	deque<Cube> N;
 	for (int i = 0; i < F.size(); i++) {
 		if (F[i].getValue(x) == 3) {
-			nF.push_back(F[i]);
+			N.push_back(F[i]);
 		}
 		else if (F[i].getValue(x) == 2) {
 			F[i].setDontCare(x);
-			nF.push_back(F[i]);
+			N.push_back(F[i]);
 		}
 	}
-	return nF;
+	return N;
 }
 
 void AND(deque<Cube>& F, int x, int T) {
@@ -95,23 +95,6 @@ void AND(deque<Cube>& F, int x, int T) {
 	}
 }
 
-void removered(deque<Cube>& F, int number_of_variables) {
-	for (int i = 0; i < F.size() - 1; i++) {
-		for (int j = i+1; j < F.size(); j++) {
-			bool t = 1;
-			for (int k = 0; k < number_of_variables; k++) {
-				if (F[i].getValue(k+1) != F[j].getValue(k + 1)){
-					t = 0;
-					break;
-				}
-			}
-			if (t) {
-				F.erase(F.begin() + j);
-				j--;
-			}
-		}
-	}
-}
 
 deque<Cube> Complement(deque<Cube> F, int number_of_variables) {
 	// Empty cube list
@@ -141,37 +124,33 @@ deque<Cube> Complement(deque<Cube> F, int number_of_variables) {
 		AND(P, x, 1);
 		AND(N, x, 0);
 
-		F.clear();
-		for (int i = 0; i < P.size(); i++)
-			F.push_back(P[i]);
+
 		for (int i = 0; i < N.size(); i++)
-			F.push_back(N[i]);
+			P.push_back(N[i]);
 
-		//removered(F, number_of_variables);
-
-		return F;
+		return P;
 	}
 }
 
 int main()
 {
-	freopen("part5.pcn", "r", stdin);
-	freopen("outputpart5.pcn", "w", stdout);
+	freopen("part1.pcn", "r", stdin);
+	freopen("outputpart1.pcn", "w", stdout);
 
 	int number_of_variables;
 	int number_of_cubes;
-	int vars, val, i , j;
+	int variables, value, i , j;
 
 	deque<Cube> F;
 
 	cin >> number_of_variables >> number_of_cubes;
 	
 	for (i = 0; i < number_of_cubes; i++) {
-		cin >> vars;
+		cin >> variables;
 		Cube c(number_of_variables);
-		for (j = 0; j < vars; j++) {
-			cin >> val;
-			c.setValue_at(val);
+		for (j = 0; j < variables; j++) {
+			cin >> value;
+			c.setValue_at(value);
 		}
 		F.push_back(c);
 	}
@@ -199,16 +178,6 @@ int main()
 		if(i!= Fp.size()-1)
 			cout << endl;
 	}
-
-	//cout << endl;cout << endl;cout << endl;
-	//cout << number_of_variables << endl;
-	//cout << F.size() << endl;
-	//for (i = 0; i < F.size(); i++) {
-	//	int x;
-	//	for (int j = 0; j < number_of_variables; j++)
-	//		cout << F[i].getValue(j + 1) << ' ';
-	//	cout << endl;
-	//}
 
 }
 
