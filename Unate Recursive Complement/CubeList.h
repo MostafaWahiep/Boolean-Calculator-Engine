@@ -15,13 +15,15 @@ public:
 
 	deque<Cube> cubes;
 
+	CubeList(int number_of_variables);
+
 	CubeList(int number_of_variables, int number_of_cubes);
 
 	CubeList(const CubeList &origin);
 
-	CubeList positiveCofactor();
+	CubeList positiveCofactor(int x);
 
-	CubeList negativeCofactor();
+	CubeList negativeCofactor(int x);
 
 	bool isBinate();
 
