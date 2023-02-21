@@ -1,6 +1,9 @@
 #include "CubeList.h"
 #include <algorithm>
 
+CubeList::CubeList()
+	:number_of_variables(0), number_of_cubes(0) {}
+
 CubeList::CubeList(int number_of_variables)
 	:number_of_variables(number_of_variables), number_of_cubes(0) {}
 

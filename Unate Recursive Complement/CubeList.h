@@ -15,6 +15,8 @@ public:
 
 	deque<Cube> cubes;
 
+	CubeList();
+
 	CubeList(int number_of_variables);
 
 	CubeList(int number_of_variables, int number_of_cubes);

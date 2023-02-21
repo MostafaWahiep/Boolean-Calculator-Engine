@@ -5,6 +5,7 @@
 #include <deque>
 #include <fstream>
 #include <algorithm>
+#include <unordered_map>
 #include "CubeList.h"
 #include "Cube.h"
 
@@ -26,6 +27,34 @@ CubeList complementOneCubed(CubeList F) {
 		}
 	}
 	return nF;
+}
+
+CubeList readInput(string file_name) {
+	int number_of_variables;
+	int number_of_cubes;
+	int variables, value, i, j;
+
+	ifstream input;
+	input.open(file_name);
+
+	if (!input.is_open())
+		exit(EXIT_FAILURE);
+
+	input >> number_of_variables >> number_of_cubes;
+
+	CubeList F(number_of_variables);
+
+	for (i = 0; i < number_of_cubes; i++) {
+		input >> variables;
+		Cube c(number_of_variables);
+		for (j = 0; j < variables; j++) {
+			input >> value;
+			c.setValue_at(value);
+		}
+		F.addCube(c);
+	}
+
+	return F;
 }
 
 void writeOutput(CubeList F, string file_name) {
@@ -56,6 +85,18 @@ void writeOutput(CubeList F, string file_name) {
 	}
 	output.close();
 
+}
+
+CubeList OR(CubeList& R, CubeList& L) {
+	CubeList D(R.number_of_variables);
+	for (Cube c : R.cubes) {
+		D.addCube(c);
+	}
+	for (Cube c : L.cubes) {
+		D.addCube(c);
+	}
+
+	return D;
 }
 
 CubeList Complement(CubeList F) {
@@ -90,41 +131,78 @@ CubeList Complement(CubeList F) {
 
 		P.AND(x, 1);
 		N.AND(x, 0);
-		
-		for (Cube c : N.cubes) {
-			P.addCube(c);
-		}
 
-		return P;
+		return OR(P, N);
 	}
+}
+
+CubeList AND(CubeList& R, CubeList& L) {
+	CubeList Rp(Complement(R)), Lp(Complement(L));
+	CubeList O(OR(Rp, Lp));
+
+	return Complement(O);
+}
+
+void run() {
+	char s;
+	string a1, a2, a3;
+
+	ifstream input;
+	input.open("cmd6.txt");
+
+	if (!input.is_open())
+		exit(EXIT_FAILURE);
+
+	unordered_map<string, CubeList> mp;
+	string path;
+	input >> s;
+	while (input.good()) {
+		switch (s)
+		{
+		case 'r':
+			input >> a1;
+			path = a1 + ".pcn";
+			mp[a1] = readInput(path);
+			break;
+		case '!':
+			input >> a1 >> a2;
+			mp[a1] = Complement(mp[a2]);
+			break;
+		case '+':
+			input >> a1 >> a2 >> a3;
+			mp[a1] = OR(mp[a2], mp[a3]);
+			break;
+		case '&':
+			input >> a1 >> a2 >> a3;
+			mp[a1] = AND(mp[a2], mp[a3]);
+			break;
+		case 'p':
+			input >> a1;
+			path = a1 + ".pcn";
+			writeOutput(mp[a1], path);
+			break;
+		case 'q':
+			return;
+
+		default:
+			break;
+		}
+		input >> s;
+	}
+
 }
 
 int main()
 {
-	freopen("part5.pcn", "r", stdin);
+	//CubeList F = readInput("part5.pcn");
 
-	int number_of_variables;
-	int number_of_cubes;
-	int variables, value, i , j;
+	//CubeList Fp = Complement(F);
 
-	cin >> number_of_variables >> number_of_cubes;
+	//string file_name = "outputpart5.pcn";
 
-	CubeList F(number_of_variables);
-	
-	for (i = 0; i < number_of_cubes; i++) {
-		cin >> variables;
-		Cube c(number_of_variables);
-		for (j = 0; j < variables; j++) {
-			cin >> value;
-			c.setValue_at(value);
-		}
-		F.addCube(c);
-	}
+	//writeOutput(Fp, file_name);
 
-	CubeList Fp = Complement(F);
+	run();
 
-	string file_name = "outputpart5.pcn";
-
-	writeOutput(Fp, file_name);
 }
 
