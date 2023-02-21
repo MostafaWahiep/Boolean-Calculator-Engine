@@ -36,12 +36,6 @@ public:
 	void AND(int x, int T);
 
 	void addCube(Cube c);
-
-	void removeCube(int index);
-
-
-
-
 	
 };
 
