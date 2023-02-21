@@ -207,10 +207,10 @@ int main()
 	cout << Fp.size() << endl;
 	for (i = 0; i < Fp.size(); i++) {
 		int x = 0;
-		for (int j = 0; j < number_of_variables; j++)
+		for (j = 0; j < number_of_variables; j++)
 			if (Fp[i].getValue(j + 1) < 3) x++;
 		cout << x << ' ';
-		for (int j = 0; j < number_of_variables; j++) {
+		for (j = 0; j < number_of_variables; j++) {
 			if (Fp[i].getValue(j + 1) == 3) continue;
 			if (Fp[i].getValue(j + 1) == 1)
 				cout << j + 1;
