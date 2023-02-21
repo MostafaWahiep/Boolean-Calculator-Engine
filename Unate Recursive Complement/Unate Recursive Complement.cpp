@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <deque>
+#include <fstream>
 #include <algorithm>
 #include "CubeList.h"
 #include "Cube.h"
@@ -25,6 +26,36 @@ CubeList complementOneCubed(CubeList F) {
 		}
 	}
 	return nF;
+}
+
+void writeOutput(CubeList F, string file_name) {
+	int x, j;
+	
+	ofstream output;
+	output.open(file_name);
+	if (!output.is_open())
+		exit(EXIT_FAILURE);
+
+	output << F.number_of_variables << endl;
+	output << F.number_of_cubes << endl;
+	for (Cube c : F.cubes) {
+		x = 0;
+		for (j = 0; j < F.number_of_variables; j++)
+			if (c.getValue(j + 1) < 3) x++;
+		output << x << ' ';
+		for (j = 0; j < F.number_of_variables; j++) {
+			if (c.getValue(j + 1) == 3) continue;
+			if (c.getValue(j + 1) == 1)
+				output << j + 1;
+			else if (c.getValue(j + 1) == 2)
+				output << -1 * j - 1;
+			if (j != F.number_of_variables - 1)
+				output << ' ';
+		}
+		output << endl;
+	}
+	output.close();
+
 }
 
 CubeList Complement(CubeList F) {
@@ -71,7 +102,6 @@ CubeList Complement(CubeList F) {
 int main()
 {
 	freopen("part5.pcn", "r", stdin);
-	freopen("outputpart5.pcn", "w", stdout);
 
 	int number_of_variables;
 	int number_of_cubes;
@@ -91,29 +121,10 @@ int main()
 		F.addCube(c);
 	}
 
-	
-
 	CubeList Fp = Complement(F);
 
-	cout << number_of_variables << endl;
-	cout << Fp.number_of_cubes << endl;
-	for (Cube c: Fp.cubes) {
-		int x = 0;
-		for (j = 0; j < number_of_variables; j++)
-			if (c.getValue(j + 1) < 3) x++;
-		cout << x << ' ';
-		for (j = 0; j < number_of_variables; j++) {
-			if (c.getValue(j + 1) == 3) continue;
-			if (c.getValue(j + 1) == 1)
-				cout << j + 1;
-			else if(c.getValue(j + 1) == 2)
-				cout << -1 * j - 1;
-			if (j != number_of_variables - 1)
-				cout << ' ';
-		}
-		if(i!= Fp.number_of_cubes-1)
-			cout << endl;
-	}
+	string file_name = "outputpart5.pcn";
 
+	writeOutput(Fp, file_name);
 }
 

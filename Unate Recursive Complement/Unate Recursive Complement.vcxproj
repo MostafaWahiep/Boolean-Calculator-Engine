@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="CubeList.cpp" />
+    <ClCompile Include="Boolean Calculator Engine.cpp" />
     <ClCompile Include="Unate Recursive Complement.cpp" />
   </ItemGroup>
   <ItemGroup>
