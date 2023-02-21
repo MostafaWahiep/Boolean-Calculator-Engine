@@ -20,6 +20,7 @@ public:
 	CubeList(int number_of_variables, int number_of_cubes);
 
 	CubeList(const CubeList &origin);
+	CubeList &operator=(const CubeList& origin);
 
 	CubeList positiveCofactor(int x);
 
@@ -29,7 +30,7 @@ public:
 
 	int MostBinate();
 
-	int Mostunnate();
+	int Mostunate();
 
 	bool isAllDontCaresCube();
 

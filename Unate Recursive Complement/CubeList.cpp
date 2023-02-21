@@ -1,18 +1,36 @@
 #include "CubeList.h"
 #include <algorithm>
 
-CubeList::CubeList(int number_of_variables)
-	:number_of_variables(number_of_variables), number_of_cubes(0) {}
+CubeList::CubeList(int number_of_variables) {
+	this->number_of_cubes = 0;
+	this->number_of_variables = number_of_variables;
+}
 
-CubeList::CubeList(int number_of_variables, int number_of_cubes)
-	:number_of_variables(number_of_variables), number_of_cubes(number_of_cubes) {}
+CubeList::CubeList(int number_of_variables, int number_of_cubes) {
+	this->number_of_cubes = number_of_cubes;
+	this->number_of_variables = number_of_variables;
+}
 
-CubeList::CubeList(const CubeList& origin)
-	:number_of_variables(origin.number_of_variables), number_of_cubes(origin.number_of_cubes) {
+CubeList::CubeList(const CubeList& origin) {
+	this->number_of_cubes = origin.number_of_cubes;
+	this->number_of_variables = origin.number_of_variables;
+
 	for (const Cube c : origin.cubes) {
 		Cube new_c(c);
 		cubes.push_back(new_c);
 	}
+}
+
+CubeList & CubeList::operator=(const CubeList& origin) {
+	if (this != &origin) {
+		number_of_cubes = origin.number_of_cubes;
+		number_of_variables = origin.number_of_variables;
+		for (const Cube c : origin.cubes) {
+			Cube new_c(c);
+			cubes.push_back(new_c);
+		}
+	}
+	return *this;
 }
 
 CubeList CubeList::positiveCofactor(int x) {
@@ -35,7 +53,7 @@ CubeList CubeList::negativeCofactor(int x) {
 		if (c.getValue(x) == 3) {
 			P.addCube(c);
 		}
-		else if (c.getValue(x) == 1) {
+		else if (c.getValue(x) == 2) {
 			c.setDontCare(x);
 			P.addCube(c);
 		}
@@ -46,7 +64,7 @@ CubeList CubeList::negativeCofactor(int x) {
 bool CubeList::isBinate() {
 	for (int i = 0; i < number_of_variables; i++) {
 		int T = 0, C = 0;
-		for (Cube c : cubes) {
+		for (Cube &c : cubes) {
 			if (c.getValue(i + 1) == 1)
 				T++;
 			else if (c.getValue(i + 1) == 2)
@@ -63,7 +81,7 @@ int CubeList::MostBinate() {
 
 	for (int i = 0; i < number_of_variables; i++) {
 		int T = 0, C = 0, O = 0;
-		for (Cube c : cubes) {
+		for (Cube &c : cubes) {
 			const int value = c.getValue(i + 1);
 			if (value == 1) {
 				T++;
@@ -98,11 +116,11 @@ int CubeList::MostBinate() {
 
 }
 
-int CubeList::Mostunnate() {
+int CubeList::Mostunate() {
 	vector<pair<int, int>> ties;
 	for (int i = 0; i < number_of_variables; i++) {
 		int O = 0;
-		for (Cube c : cubes) {
+		for (Cube &c : cubes) {
 			if (c.getValue(i + 1) < 3) {
 				O++;
 			}
@@ -119,7 +137,7 @@ int CubeList::Mostunnate() {
 }
 
 bool CubeList::isAllDontCaresCube() {
-	for (Cube c : cubes) {
+	for (Cube &c : cubes) {
 		if (c.isDontCare())
 			return true;
 	}
@@ -127,7 +145,7 @@ bool CubeList::isAllDontCaresCube() {
 }
 
 void CubeList::AND(int x, int T) {
-	for (Cube c : cubes) {
+	for (Cube &c : cubes) {
 		c.setValue(x, T);
 	}
 }
