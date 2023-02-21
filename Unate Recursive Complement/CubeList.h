@@ -36,7 +36,7 @@ public:
 
 	void AND(int x, int T);
 
-	void addCube(Cube c);
+	void addCube(Cube &c);
 	
 };
 

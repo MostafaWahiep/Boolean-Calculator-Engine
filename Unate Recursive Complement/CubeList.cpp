@@ -1,19 +1,14 @@
 #include "CubeList.h"
 #include <algorithm>
 
-CubeList::CubeList(int number_of_variables) {
-	this->number_of_cubes = 0;
-	this->number_of_variables = number_of_variables;
-}
+CubeList::CubeList(int number_of_variables)
+	:number_of_variables(number_of_variables), number_of_cubes(0) {}
 
-CubeList::CubeList(int number_of_variables, int number_of_cubes) {
-	this->number_of_cubes = number_of_cubes;
-	this->number_of_variables = number_of_variables;
-}
+CubeList::CubeList(int number_of_variables, int number_of_cubes)
+	: number_of_variables(number_of_variables), number_of_cubes(number_of_cubes) {}
 
-CubeList::CubeList(const CubeList& origin) {
-	this->number_of_cubes = origin.number_of_cubes;
-	this->number_of_variables = origin.number_of_variables;
+CubeList::CubeList(const CubeList& origin)
+	: number_of_variables(origin.number_of_variables), number_of_cubes(origin.number_of_cubes) {
 
 	for (const Cube c : origin.cubes) {
 		Cube new_c(c);
@@ -150,7 +145,7 @@ void CubeList::AND(int x, int T) {
 	}
 }
 
-void CubeList::addCube(Cube c) {
+void CubeList::addCube(Cube &c) {
 	if (c.number_of_variables != this->number_of_variables)
 		exit(1);
 	number_of_cubes++;

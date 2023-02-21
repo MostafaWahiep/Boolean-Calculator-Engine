@@ -54,7 +54,6 @@ CubeList Complement(CubeList F) {
 			x = F.Mostunate();
 		}
 
-
 		CubeList P = Complement(F.positiveCofactor(x));
 		CubeList N = Complement(F.negativeCofactor(x));
 
