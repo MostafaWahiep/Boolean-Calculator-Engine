@@ -143,7 +143,7 @@ CubeList AND(CubeList& R, CubeList& L) {
 	return Complement(O);
 }
 
-void run() {
+void BooleanCalcEngine() {
 	char s;
 	string a1, a2, a3;
 
@@ -202,7 +202,7 @@ int main()
 
 	//writeOutput(Fp, file_name);
 
-	run();
+	BooleanCalcEngine();
 
 }
 
