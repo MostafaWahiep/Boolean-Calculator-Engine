@@ -136,11 +136,20 @@ CubeList Complement(CubeList F) {
 	}
 }
 
+// works using demorgan: a.b = ~(~a+~b)
 CubeList AND(CubeList& R, CubeList& L) {
 	CubeList Rp(Complement(R)), Lp(Complement(L));
 	CubeList O(OR(Rp, Lp));
 
 	return Complement(O);
+}
+
+CubeList EXOR(CubeList& R, CubeList& L) {
+	CubeList Rp(Complement(R)), Lp(Complement(L));
+	CubeList R_Lp(AND(R, Lp));
+	CubeList Rp_L(AND(Rp, L));
+
+	return OR(R_Lp, Rp_L);
 }
 
 void BooleanCalcEngine() {
@@ -159,28 +168,39 @@ void BooleanCalcEngine() {
 	while (input.good()) {
 		switch (s)
 		{
+		// read
 		case 'r':
 			input >> a1;
 			path = a1 + ".pcn";
 			mp[a1] = readInput(path);
 			break;
+		// complement
 		case '!':
 			input >> a1 >> a2;
 			mp[a1] = Complement(mp[a2]);
 			break;
+		// a1 = a2 + a3
 		case '+':
 			input >> a1 >> a2 >> a3;
 			mp[a1] = OR(mp[a2], mp[a3]);
 			break;
+		// a1 = a2.a3
 		case '&':
 			input >> a1 >> a2 >> a3;
 			mp[a1] = AND(mp[a2], mp[a3]);
 			break;
+		// a1 = a2.a3
+		case '^':
+			input >> a1 >> a2 >> a3;
+			mp[a1] = EXOR(mp[a2], mp[a3]);
+			break;
+		// print a1
 		case 'p':
 			input >> a1;
 			path = a1 + ".pcn";
 			writeOutput(mp[a1], path);
 			break;
+		// quit
 		case 'q':
 			return;
 
